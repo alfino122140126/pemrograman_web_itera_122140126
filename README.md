@@ -12,7 +12,7 @@ Semua data disimpan di browser menggunakan `localStorage`, sehingga tetap ada me
 
 ## Screenshot Aplikasi
 
-![Personal Dashboard](https://via.placeholder.com/800x450?text=Personal+Dashboard)  
+![Personal Dashboard – Screenshot](assets/screenshot.png)
 
 ---
 
