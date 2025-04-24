@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Personal Dashboard</h1>
+      </header>
+
+      <section id="schedule">
+        <h2>Jadwal Kuliah</h2>
+        <ul id="schedule-list"></ul>
+        <input
+          type="text"
+          id="schedule-input"
+          placeholder="Masukkan Jadwal Kuliah"
+        />
+        <button id="add-schedule">Tambah Jadwal</button>
+      </section>
+
+      <section id="tasks">
+        <h2>Daftar Tugas</h2>
+        <ul id="tasks-list"></ul>
+        <input type="text" id="task-input" placeholder="Masukkan Tugas" />
+        <button id="add-task">Tambah Tugas</button>
+      </section>
+
+      <section id="notes">
+        <h2>Catatan</h2>
+        <ul id="notes-list"></ul>
+        <input type="text" id="note-input" placeholder="Masukkan Catatan" />
+        <button id="add-note">Tambah Catatan</button>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
