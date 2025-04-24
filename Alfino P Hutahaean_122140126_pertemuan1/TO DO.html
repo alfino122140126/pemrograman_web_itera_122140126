@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Simple Todo List App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .completed {
+        text-decoration: line-through;
+        color: gray;
+      }
+      input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        margin-right: 10px;
+      }
+      button {
+        padding: 10px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Todo List</h1>
+    <div>
+      <input type="text" id="todoInput" placeholder="Enter a new task" />
+      <button onclick="addTodo()">Add Task</button>
+    </div>
+    <ul id="todoList"></ul>
+
+    <script>
+      // Load todos from localStorage on page load
+      document.addEventListener("DOMContentLoaded", loadTodos);
+
+      function addTodo() {
+        const input = document.getElementById("todoInput");
+        const todoText = input.value.trim();
+
+        if (todoText === "") return;
+
+        const todoList = document.getElementById("todoList");
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+                <span>${todoText}</span>
+                <div>
+                    <button onclick="toggleComplete(this)">✓</button>
+                    <button onclick="deleteTodo(this)">✕</button>
+                </div>
+            `;
+
+        todoList.appendChild(li);
+        input.value = "";
+
+        // Save to localStorage
+        saveTodos();
+      }
+
+      function toggleComplete(button) {
+        const todoItem = button.closest("li").querySelector("span");
+        todoItem.classList.toggle("completed");
+
+        // Save to localStorage
+        saveTodos();
+      }
+
+      function deleteTodo(button) {
+        button.closest("li").remove();
+
+        // Save to localStorage
+        saveTodos();
+      }
+
+      function saveTodos() {
+        const todoList = document.getElementById("todoList");
+        const todos = Array.from(todoList.children).map((li) => ({
+          text: li.querySelector("span").textContent,
+          completed: li.querySelector("span").classList.contains("completed"),
+        }));
+
+        localStorage.setItem("todos", JSON.stringify(todos));
+      }
+
+      function loadTodos() {
+        const savedTodos = JSON.parse(localStorage.getItem("todos") || "[]");
+        const todoList = document.getElementById("todoList");
+
+        savedTodos.forEach((todo) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+                    <span class="${todo.completed ? "completed" : ""}">${
+            todo.text
+          }</span>
+                    <div>
+                        <button onclick="toggleComplete(this)">✓</button>
+                        <button onclick="deleteTodo(this)">✕</button>
+                    </div>
+                `;
+          todoList.appendChild(li);
+        });
+      }
+    </script>
+  </body>
+</html>

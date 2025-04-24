@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Form Validation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .error {
+        color: red;
+        font-size: 0.8em;
+        margin-top: 5px;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .success {
+        color: green;
+        font-weight: bold;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Registration Form</h1>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Enter your name" />
+        <div id="nameError" class="error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email" />
+        <div id="emailError" class="error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+        />
+        <div id="passwordError" class="error"></div>
+      </div>
+
+      <button type="submit">Register</button>
+      <div id="formSuccess" class="success"></div>
+    </form>
+
+    <script>
+      // Form elements
+      const form = document.getElementById("registrationForm");
+      const nameInput = document.getElementById("name");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+
+      // Error elements
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+      const passwordError = document.getElementById("passwordError");
+      const formSuccess = document.getElementById("formSuccess");
+
+      /**
+       * Validates the name field
+       * @returns {boolean} Whether the name is valid
+       */
+      function validateName() {
+        const name = nameInput.value.trim();
+
+        if (name.length <= 3) {
+          nameError.textContent = "Name must be more than 3 characters";
+          return false;
+        } else {
+          nameError.textContent = "";
+          return true;
+        }
+      }
+
+      /**
+       * Validates the email field
+       * @returns {boolean} Whether the email is valid
+       */
+      function validateEmail() {
+        const email = emailInput.value.trim();
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+        if (!emailRegex.test(email)) {
+          emailError.textContent = "Please enter a valid email address";
+          return false;
+        } else {
+          emailError.textContent = "";
+          return true;
+        }
+      }
+
+      /**
+       * Validates the password field
+       * @returns {boolean} Whether the password is valid
+       */
+      function validatePassword() {
+        const password = passwordInput.value;
+
+        if (password.length < 8) {
+          passwordError.textContent = "Password must be at least 8 characters";
+          return false;
+        } else {
+          passwordError.textContent = "";
+          return true;
+        }
+      }
+
+      // Add input event listeners for real-time validation
+      nameInput.addEventListener("input", validateName);
+      emailInput.addEventListener("input", validateEmail);
+      passwordInput.addEventListener("input", validatePassword);
+
+      // Form submission
+      form.addEventListener("submit", function (event) {
+        // Prevent the form from submitting
+        event.preventDefault();
+
+        // Validate all fields
+        const isNameValid = validateName();
+        const isEmailValid = validateEmail();
+        const isPasswordValid = validatePassword();
+
+        // If all validations pass
+        if (isNameValid && isEmailValid && isPasswordValid) {
+          formSuccess.textContent = "Registration successful!";
+
+          // Reset the form after successful submission
+          setTimeout(() => {
+            form.reset();
+            formSuccess.textContent = "";
+          }, 3000);
+        } else {
+          formSuccess.textContent = "";
+        }
+      });
+    </script>
+  </body>
+</html>
